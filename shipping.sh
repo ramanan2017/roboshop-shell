@@ -1,4 +1,4 @@
-cp shipping.service   /etc/systemd/system/shipping.service
+cp shipping.service /etc/systemd/system/shipping.service
 
 yum install maven -y
 useradd roboshop
@@ -11,7 +11,7 @@ mvn clean package
 mv target/shipping-1.0.jar shipping.jar
 
 systemctl daemon-reload
-mysql -h mysql.ramdevops.co.uk -uroot -pRoboShop@1 </app/schema/shipping.sql
+mysql -h mysql.ramdevops.co.uk -uroot -pRoboShop@1 < /app/schema/shipping.sql
 
 
 systemctl enable shipping
