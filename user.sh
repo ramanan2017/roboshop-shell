@@ -1,5 +1,6 @@
 cp user.service  /etc/systemd/system/user.service
-cp  mongodb.repo   /etc/yum.repos.d/mongo.repo
+cp  mongo.repo   /etc/yum.repos.d/mongo.repo
+
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash
 yum install nodejs -y
 useradd roboshop
@@ -11,7 +12,7 @@ cd /app
 npm install
 systemctl daemon-reload
 yum install mongodb-org-shell -y
-mongo --host MONGODB-SERVER-IPADDRESS </app/schema/user.js
+mongo --host  mongodb.ramdevops.co.uk </app/schema/user.js
 
 
 systemctl enable user
