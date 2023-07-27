@@ -36,7 +36,7 @@ yum install mongodb-org-shell -y
 echo -e "\e[36m >>>>>>>>>>>> Load Catalogue Schema <<<<<<<<<<\e[0m"
 mongo --host  mongodb.ramdevops.co.uk </app/schema/catalogue.js
 
-echo -e"\e[36m >>>>>>>>>>>>> start services <<<<<<<<<<\e[0m"
+echo -e "\e[36m >>>>>>>>>>>>> start services <<<<<<<<<<\e[0m"
 systemctl daemon-reload
 systemctl enable catalogue
 systemctl restart catalogue
