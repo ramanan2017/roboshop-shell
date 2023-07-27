@@ -36,7 +36,7 @@ yum install mongodb-org-shell -y  &>> /tmp/roboshop.log
 echo -e "\e[36m >>>>>>>>>>>> Load Catalogue Schema <<<<<<<<<<\e[0m"
 mongo --host  mongodb.ramdevops.co.uk </app/schema/catalogue.js  &>> /tmp/roboshop.log
 
-echo -e "\e[36m >>>>>>>>>>>>> start services <<<<<<<<<<\e[0m"
+echo -e "\e[36m >>>>>>>>>>>>> start services <<<<<<<<<<\e[0m"  | tee -a /tmp/roboshop.log
 systemctl daemon-reload
 systemctl enable catalogue
 systemctl restart catalogue
