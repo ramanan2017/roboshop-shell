@@ -20,6 +20,7 @@ func_apppreq(){
     cd /app
     unzip /tmp/${component}.zip &>> ${log}
     cd /app
+
 }
 
 func_systemd(){
@@ -27,6 +28,8 @@ func_systemd(){
     systemctl daemon-reload &>> ${log}
     systemctl enable ${component}
     systemctl restart ${component}
+    echo -e "\e[36m >>>>>>>>>> remove log file <<<<<<<<<<\e[0m"
+    rm -rf ${log}
 }
 
 func_schema_setup(){
