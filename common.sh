@@ -97,14 +97,14 @@ func_python(){
 }
 func_go(){
   echo -e "\e[36m >>>>>>>>>> Install ${component}  Service <<<<<<<<<<\e[0m"
-  yum install golang -y
+  yum install golang -y &>> ${log}
 
   func_apppreq
 
   echo -e "\e[36m >>>>>>>>>> Build ${component}  Service <<<<<<<<<<\e[0m"
-  go mod init dispatch
-  go get
-  go build
+  go mod init dispatch &>> ${log}
+  go get &>> ${log}
+  go build &>> ${log}
 
   func_systemd
 }
