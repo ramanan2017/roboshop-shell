@@ -1,3 +1,5 @@
+log=/tmp/roboshop.log
+
 func_apppreq(){
   echo -e "\e[36m >>>>>>>>>> Create Application ${component}<<<<<<<<<<\e[0m"
     useradd roboshop &>> ${log}
@@ -19,7 +21,7 @@ func_apppreq(){
 
 Func_systemd(){
     echo -e "\e[36m >>>>>>>>>> start ${component} services <<<<<<<<<<\e[0m"
-    systemctl daemon-reload &>>${log}
+    systemctl daemon-reload &>> ${log}
     systemctl enable ${component}
     systemctl restart ${component}
 }
@@ -60,22 +62,22 @@ func_nodejs(){
 
 func_java(){
   echo -e "\e[36m >>>>>>>>>> Create ${component} Service <<<<<<<<<<\e[0m"
-  cp ${component}.service /etc/systemd/system/${component}.service
+  cp ${component}.service /etc/systemd/system/${component}.service &>> ${log}
 
   echo -e "\e[36m >>>>>>>>>> Install Maven <<<<<<<<<<\e[0m"
-  yum install maven -y
+  yum install maven -y &>> ${log}
 
   func_apppreq
 
   echo -e "\e[36m >>>>>>>>>> Build ${component}  Service <<<<<<<<<<\e[0m"
-  mvn clean package
-  mv target/${component}-1.0.jar ${component}.jar
+  mvn clean package &>> ${log}
+  mv target/${component}-1.0.jar ${component}.jar &>> ${log}
 
   echo -e "\e[36m >>>>>>>>>> Install MySql Client <<<<<<<<<<\e[0m"
-  yum install mysql -y
+  yum install mysql -y &>> ${log}
 
   echo -e "\e[36m >>>>>>>>>> Load Schema <<<<<<<<<<\e[0m"
-  mysql -h mysql.ramdevops.co.uk -uroot -pRoboShop@1 < /app/schema/${component}.sql
+  mysql -h mysql.ramdevops.co.uk -uroot -pRoboShop@1 < /app/schema/${component}.sql &>> ${log}
   
   Func_systemd
 
