@@ -95,7 +95,7 @@ func_python(){
   func_systemd
 
 }
-fun_go(){
+func_go(){
   echo -e "\e[36m >>>>>>>>>> Install ${component}  Service <<<<<<<<<<\e[0m"
   yum install golang -y
 
