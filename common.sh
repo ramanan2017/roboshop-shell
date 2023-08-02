@@ -30,7 +30,7 @@ func_systemd(){
 }
 
 func_schema_setup(){
-    if ["${schema_type}" == "mongodb" ]
+    if [ "${schema_type}" == "mongodb" ]
     then
       echo -e "\e[36m >>>>>>>>>> Download MongoDB <<<<<<<<<<\e[0m"
       yum install mongodb-org-shell -y &>> ${log}
