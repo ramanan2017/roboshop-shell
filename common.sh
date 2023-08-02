@@ -1,7 +1,10 @@
 log=/tmp/roboshop.log
 
 func_apppreq(){
-  echo -e "\e[36m >>>>>>>>>> Create Application ${component}<<<<<<<<<<\e[0m"
+    echo -e "\e[36m >>>>>>>>>> Create ${component} Service <<<<<<<<<<\e[0m"
+    cp ${component}.service /etc/systemd/system/${component}.service &>> ${log}
+
+    echo -e "\e[36m >>>>>>>>>> Create Application ${component}<<<<<<<<<<\e[0m"
     useradd roboshop &>> ${log}
 
     echo -e "\e[36m >>>>>>>>>> Cleanup Exsisting Application content<<<<<<<<<<\e[0m"
@@ -59,10 +62,7 @@ func_nodejs(){
   Func_systemd
 }
 
-
 func_java(){
-  echo -e "\e[36m >>>>>>>>>> Create ${component} Service <<<<<<<<<<\e[0m"
-  cp ${component}.service /etc/systemd/system/${component}.service &>> ${log}
 
   echo -e "\e[36m >>>>>>>>>> Install Maven <<<<<<<<<<\e[0m"
   yum install maven -y &>> ${log}
@@ -79,6 +79,19 @@ func_java(){
   echo -e "\e[36m >>>>>>>>>> Load Schema <<<<<<<<<<\e[0m"
   mysql -h mysql.ramdevops.co.uk -uroot -pRoboShop@1 < /app/schema/${component}.sql &>> ${log}
   
+  Func_systemd
+
+}
+
+func_python(){
+  echo -e "\e[36m >>>>>>>>>> Build ${component}  Service <<<<<<<<<<\e[0m"
+  yum install python36 gcc python3-devel -y &>> ${log}
+
+  func_apppreq
+
+  echo -e "\e[36m >>>>>>>>>> Install ${component}  Service <<<<<<<<<<\e[0m"
+  pip3.6 install -r requirements.txt &>> ${log}
+
   Func_systemd
 
 }
