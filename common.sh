@@ -14,7 +14,12 @@ func_apppreq(){
     func_exit_status
 
     echo -e "\e[36m >>>>>>>>>> Create Application ${component}<<<<<<<<<<\e[0m"
-    useradd roboshop &>> ${log}
+    id roboshop &>> ${log}
+    if [ $? -ne 0 ]
+    then
+      useradd roboshop &>> ${log}
+    fi
+
     func_exit_status
 
     echo -e "\e[36m >>>>>>>>>> Cleanup Exsisting Application content<<<<<<<<<<\e[0m"
