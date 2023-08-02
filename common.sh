@@ -22,7 +22,7 @@ func_apppreq(){
     cd /app
 }
 
-Func_systemd(){
+func_systemd(){
     echo -e "\e[36m >>>>>>>>>> start ${component} services <<<<<<<<<<\e[0m"
     systemctl daemon-reload &>> ${log}
     systemctl enable ${component}
@@ -59,7 +59,7 @@ func_nodejs(){
   echo -e "\e[36m >>>>>>>>>> Load Catalogue Schema <<<<<<<<<<\e[0m"
   mongo --host  mongodb.ramdevops.co.uk </app/schema/${component}.js  &>> ${log}
 
-  Func_systemd
+  func_systemd
 }
 
 func_java(){
@@ -79,7 +79,7 @@ func_java(){
   echo -e "\e[36m >>>>>>>>>> Load Schema <<<<<<<<<<\e[0m"
   mysql -h mysql.ramdevops.co.uk -uroot -pRoboShop@1 < /app/schema/${component}.sql &>> ${log}
   
-  Func_systemd
+  func_systemd
 
 }
 
@@ -92,6 +92,19 @@ func_python(){
   echo -e "\e[36m >>>>>>>>>> Install ${component}  Service <<<<<<<<<<\e[0m"
   pip3.6 install -r requirements.txt &>> ${log}
 
-  Func_systemd
+  func_systemd
 
+}
+fun_go(){
+  echo -e "\e[36m >>>>>>>>>> Install ${component}  Service <<<<<<<<<<\e[0m"
+  yum install golang -y
+
+  func_apppreq
+
+  echo -e "\e[36m >>>>>>>>>> Build ${component}  Service <<<<<<<<<<\e[0m"
+  go mod init dispatch
+  go get
+  go build
+
+  func_systemd
 }
